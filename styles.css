@@ -1,5 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Jacques+Francois&family=Marcellus+SC&family=Wittgenstein:ital@0;1&display=swap');
 
+/* Smooth cross-page transitions (index.html <-> rooms.html <-> gallery.html).
+   Pure progressive enhancement: browsers without support (anything but
+   recent Chrome/Edge) just ignore this and navigate normally - no JS,
+   no fallback needed, nothing to break. */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
 /* =========================================================
    TABLE OF CONTENTS
    (search for the ALL-CAPS heading to jump to a section)
@@ -209,6 +231,66 @@ button,
   background: transparent;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
+}
+
+/* Shine sweep on the real CTA-style buttons only (not icon buttons like
+   the nav toggle, carousel arrows, or stepper +/-, where a diagonal
+   light streak across a 36px circle would just look like a glitch) */
+
+.nav-book-btn,
+.section-link,
+.outline-link,
+.outline-button,
+.outline-dark,
+.book-room-btn,
+.booking-submit,
+.button-group a {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-book-btn::after,
+.section-link::after,
+.outline-link::after,
+.outline-button::after,
+.outline-dark::after,
+.book-room-btn::after,
+.booking-submit::after,
+.button-group a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+}
+
+.nav-book-btn:hover::after,
+.section-link:hover::after,
+.outline-link:hover::after,
+.outline-button:hover::after,
+.outline-dark:hover::after,
+.book-room-btn:hover::after,
+.booking-submit:hover::after,
+.button-group a:hover::after {
+  left: 125%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-book-btn::after,
+  .section-link::after,
+  .outline-link::after,
+  .outline-button::after,
+  .outline-dark::after,
+  .book-room-btn::after,
+  .booking-submit::after,
+  .button-group a::after {
+    display: none;
+  }
 }
 
 /* =======================
@@ -1510,17 +1592,27 @@ button:hover,
     display: flex;
   }
 
-  .nav-links,
+  /* .nav-links stays display:flex always (needed so max-height/opacity
+     can transition) but is collapsed to nothing until nav-open. */
+  .nav-links {
+    flex-direction: column;
+    flex-basis: 100%;
+    gap: var(--space-md);
+    margin-left: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease 0.05s, padding 0.4s ease;
+  }
+
   .nav-book-btn {
     display: none;
   }
 
   nav.nav-open .nav-links {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    gap: var(--space-md);
-    margin-left: 0;
+    max-height: 400px;
+    opacity: 1;
     padding: var(--space-md) 0 0;
   }
 
@@ -1528,6 +1620,12 @@ button:hover,
     display: inline-block;
     flex-basis: 100%;
     text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-links {
+      transition: none;
+    }
   }
 
   /* Hamburger lines animate into an X when the menu is open */
