@@ -419,7 +419,9 @@ header nav {
 .hero-slide {
   position: absolute;
   inset: 0;
-  background-size: cover;
+  background-color: var(--color-dark);
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
   opacity: 0;
   transform: scale(1.06);
@@ -523,6 +525,19 @@ header nav {
     width: 32px;
     height: 32px;
     font-size: 16px;
+  }
+
+  .hero-dots {
+    gap: 6px;
+  }
+
+  .hero-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hero-dot.active {
+    transform: scale(1.3);
   }
 }
 
