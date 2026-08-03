@@ -2,8 +2,9 @@
 
 // ---------------------------------------------------------------
 // Hero photo slideshow — crossfades every 4s, with manual arrows/dots,
-// pause-on-hover and pause-on-focus. Auto-advance is skipped entirely
-// if the visitor has requested reduced motion; manual controls still work.
+// pause-on-hover and pause-on-focus. Always auto-advances (the zoom
+// effect backs off under prefers-reduced-motion via CSS, but the
+// rotation itself keeps going rather than freezing on one photo).
 // ---------------------------------------------------------------
 
 const heroSlides = document.querySelectorAll('.hero-slide');
@@ -37,7 +38,6 @@ if (heroSlides.length > 1) {
   };
 
   const startHeroTimer = () => {
-    if (prefersReducedMotion) return;
     stopHeroTimer();
     heroTimer = setInterval(() => goToSlide(currentSlide + 1), 4000);
   };
@@ -108,7 +108,6 @@ if (testimonialTrack) {
   };
 
   const startTestimonialTimer = () => {
-    if (prefersReducedMotion) return;
     stopTestimonialTimer();
     testimonialTimer = setInterval(() => goToTestimonial(currentTestimonial + 1), 6000);
   };
