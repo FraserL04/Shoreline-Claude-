@@ -407,7 +407,7 @@ header nav {
   overflow: hidden;
   background: var(--color-primary);
   color: var(--color-white);
-  min-height: 90vh;
+  min-height: 78vh;
   display: flex;
   align-items: center;
   padding: 96px var(--space-3xl) 112px;

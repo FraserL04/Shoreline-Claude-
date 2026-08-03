@@ -1,7 +1,7 @@
 // Shoreline Harbour & Hotel — mobile menu toggle
 
 // ---------------------------------------------------------------
-// Hero photo slideshow — crossfades every 5s, with manual arrows/dots,
+// Hero photo slideshow — crossfades every 4s, with manual arrows/dots,
 // pause-on-hover and pause-on-focus. Auto-advance is skipped entirely
 // if the visitor has requested reduced motion; manual controls still work.
 // ---------------------------------------------------------------
@@ -39,7 +39,7 @@ if (heroSlides.length > 1) {
   const startHeroTimer = () => {
     if (prefersReducedMotion) return;
     stopHeroTimer();
-    heroTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
+    heroTimer = setInterval(() => goToSlide(currentSlide + 1), 4000);
   };
 
   heroNext?.addEventListener('click', () => {
@@ -69,7 +69,7 @@ if (heroSlides.length > 1) {
 
 // ---------------------------------------------------------------
 // Testimonials carousel — single-card crossfade, auto-advances every
-// 6s (offset from the hero's 5s so they don't move in lockstep)
+// 6s (offset from the hero's 4s so they don't move in lockstep)
 // ---------------------------------------------------------------
 
 const testimonialTrack = document.querySelector('.testimonial-track');
