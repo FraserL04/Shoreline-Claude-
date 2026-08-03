@@ -419,9 +419,7 @@ header nav {
 .hero-slide {
   position: absolute;
   inset: 0;
-  background-color: var(--color-dark);
-  background-size: contain;
-  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
   opacity: 0;
   transform: scale(1.06);
